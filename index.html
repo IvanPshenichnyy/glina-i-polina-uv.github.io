@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Почему УФ-смола остаётся липкой?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;600;700;800;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFFCF7;
+    --ink:#4A3B52;
+    --ink-soft:#7A6C86;
+
+    --pink:#FFD9E9;
+    --pink-deep:#FF6FA5;
+
+    --lavender:#E7DFFF;
+    --lavender-deep:#8B6FD9;
+
+    --mint:#D2F6E3;
+    --mint-deep:#2FA575;
+
+    --butter:#FFF0C4;
+    --butter-deep:#DE9E1F;
+
+    --sky:#D9EEFF;
+    --sky-deep:#3E96D8;
+
+    --radius-lg:28px;
+    --radius-md:18px;
+    --radius-sm:12px;
+    --card-bg:url("assets/image-1.webp");
+  }
+
+  *{box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Nunito', sans-serif;
+    font-size:17px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:20px 18px 60px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* ---------- floating decoration ---------- */
+  .deco{
+    position:absolute;
+    pointer-events:none;
+    opacity:.55;
+    filter:saturate(1.1);
+  }
+
+  @keyframes floaty{
+    0%,100%{transform:translateY(0) rotate(0deg);}
+    50%{transform:translateY(-10px) rotate(6deg);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .float{animation:none !important;}
+  }
+  .float{animation:floaty 5s ease-in-out infinite;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    text-align:center;
+    padding:0;
+    border-radius:var(--radius-lg);
+    background:transparent;
+    overflow:hidden;
+  }
+
+  .hero .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(255,255,255,.75);
+    color:var(--pink-deep);
+    font-family:'Baloo 2', sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    padding:9px 18px;
+    border-radius:999px;
+    margin-bottom:22px;
+  }
+
+  .hero h1{
+    font-family:'M PLUS Rounded 1c', sans-serif;
+    font-weight:900;
+    font-size:clamp(32px, 8vw, 44px);
+    line-height:1.08;
+    margin:0 0 16px;
+    color:var(--pink-deep);
+    text-shadow:2px 2px 0 rgba(255,255,255,.5);
+  }
+
+  .hero p{
+    max-width:420px;
+    margin:0 auto;
+    color:var(--ink);
+    font-size:16.5px;
+    font-weight:600;
+  }
+
+  .hero .cat{
+    font-size:56px;
+    margin:22px 0 6px;
+  }
+
+  .hero .tag{
+    margin-top:26px;
+    display:inline-block;
+    font-family:'Baloo 2', sans-serif;
+    font-size:15px;
+    color:var(--lavender-deep);
+    background:#fff;
+    padding:6px 16px;
+    border-radius:999px;
+    transform:rotate(-3deg);
+  }
+
+
+  .hero + .divider{
+    height:0;
+    line-height:0;
+    margin:0;
+    padding:0;
+  }
+
+  /* ---------- section spacing ---------- */
+  section.reason{
+    position:relative;
+    margin-top:26px;
+    padding:30px 24px 28px;
+    border-radius:var(--radius-lg);
+  }
+
+  .num{
+    width:40px;height:40px;
+    border-radius:50%;
+    background:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:18px;
+    margin-bottom:14px;
+    box-shadow:0 3px 0 rgba(0,0,0,.05);
+  }
+
+  .reason h2{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:26px;
+    line-height:1.15;
+    margin:0 0 12px;
+  }
+
+  .reason .lead{
+    font-size:16.5px;
+    margin:0 0 16px;
+  }
+
+  .reason .mood{
+    font-size:26px;
+    float:right;
+    margin-top:-46px;
+  }
+
+  .callout{
+    background:rgba(255,255,255,.72);
+    border-radius:var(--radius-md);
+    padding:16px 18px;
+    margin:14px 0;
+  }
+
+  .callout h3{
+    font-family:'Baloo 2', sans-serif;
+    font-size:16.5px;
+    margin:0 0 10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .callout ul, .reason ul{
+    margin:0;
+    padding-left:0;
+    list-style:none;
+  }
+
+  .callout li, .reason > ul > li{
+    position:relative;
+    padding-left:24px;
+    margin-bottom:9px;
+    font-size:15.5px;
+  }
+
+  .callout li::before, .reason > ul > li::before{
+    content:"🐾";
+    position:absolute;
+    left:0;
+    font-size:12px;
+    top:3px;
+  }
+
+  .callout.tip{border:2px solid rgba(255,255,255,.9);}
+  .callout.tip h3{color:var(--mint-deep);}
+
+  .callout.warn h3{color:var(--butter-deep);}
+
+  .note{
+    display:inline-block;
+    background:#fff;
+    border-radius:var(--radius-sm) var(--radius-sm) var(--radius-sm) 2px;
+    padding:10px 14px;
+    font-size:14px;
+    font-weight:700;
+    color:var(--ink-soft);
+    margin:8px 0 16px;
+  }
+
+  .final-note{
+    white-space:nowrap;
+    font-size:clamp(11px, 3.6vw, 14px);
+    border-radius:var(--radius-sm);
+  }
+
+  /* two-column mini grid (thickness / drying time) */
+  .grid2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin:14px 0;
+  }
+  @media (max-width:420px){
+    .grid2{grid-template-columns:1fr;}
+  }
+  .grid2 .cell{
+    background:rgba(255,255,255,.72);
+    border-radius:var(--radius-md);
+    padding:14px 16px;
+  }
+  .grid2 .cell h4{
+    font-family:'Baloo 2', sans-serif;
+    font-size:15px;
+    margin:0 0 8px;
+  }
+  .grid2 .cell p{
+    margin:0;
+    font-size:14px;
+    color:var(--ink-soft);
+  }
+
+  .steps{
+    counter-reset:step;
+    margin:14px 0 0;
+    padding:0;
+    list-style:none;
+  }
+  .steps li{
+    counter-increment:step;
+    position:relative;
+    padding-left:34px;
+    margin-bottom:12px;
+    font-size:15.5px;
+  }
+  .steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0; top:-1px;
+    width:24px;height:24px;
+    border-radius:50%;
+    background:var(--sky-deep);
+    color:#fff;
+    font-family:'Baloo 2', sans-serif;
+    font-size:13px;
+    font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  .prosbox{
+    display:flex;
+    gap:12px;
+    margin-top:14px;
+  }
+  @media (max-width:420px){ .prosbox{flex-direction:column;} }
+  .prosbox .cell{
+    flex:1;
+    background:rgba(255,255,255,.72);
+    border-radius:var(--radius-md);
+    padding:14px 16px;
+    font-size:14.5px;
+  }
+  .prosbox .cell.minus{color:#B5555A;}
+  .prosbox .cell.plus{color:var(--mint-deep);}
+  .prosbox .cell strong{display:block;font-family:'Baloo 2', sans-serif;font-size:14px;margin-bottom:4px;}
+
+  /* section color themes */
+  .reason.c-pink,
+  .reason.c-lavender,
+  .reason.c-mint,
+  .reason.c-butter,
+  .reason.c-sky{
+    background-image:var(--card-bg);
+    background-size:640px auto;
+    background-position:center top;
+    background-repeat:repeat-y;
+  }
+
+  @media (max-width:420px){
+    .reason.c-pink,
+    .reason.c-lavender,
+    .reason.c-mint,
+    .reason.c-butter,
+    .reason.c-sky{
+      background-size:360px auto;
+      background-position:center top;
+      background-repeat:repeat-y;
+    }
+  }
+
+  .reason.c-pink .num{color:var(--pink-deep);}
+  .reason.c-lavender .num{color:var(--lavender-deep);}
+  .reason.c-mint .num{color:var(--mint-deep);}
+  .reason.c-butter .num{color:var(--butter-deep);}
+  .reason.c-sky .num{color:var(--sky-deep);}
+
+  /* ---------- CTA ---------- */
+  .cta{
+    margin-top:26px;
+    padding:34px 24px 30px;
+    border-radius:var(--radius-lg);
+    background-image:var(--card-bg); background-size:cover; background-position:center;
+    text-align:center;
+  }
+  .cta .num{margin:0 auto 14px;}
+  .cta h2{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:800;
+    font-size:28px;
+    margin:0 0 12px;
+    color:var(--pink-deep);
+  }
+  .cta > p{
+    max-width:430px;
+    margin:0 auto 22px;
+    font-size:16px;
+  }
+
+  .bot-card{
+    background:#fff;
+    border-radius:var(--radius-md);
+    padding:16px 18px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    text-align:left;
+    max-width:420px;
+    margin:0 auto 18px;
+  }
+  .bot-card .icon{
+    width:46px;height:46px;
+    border-radius:80%;
+    background:var(--sky-deep);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .bot-card .icon img{
+    display:block;
+    width:104%;
+    height:104%;
+    object-fit:contain;
+    background:#fff;
+    padding:2px;
+    border-radius:50%;
+    transform:translate(-2%, -2%);
+  }
+  .bot-card .name{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:16px;
+  }
+  .bot-card .desc{
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--pink-deep);
+    color:#fff;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:600;
+    font-size:16.5px;
+    text-decoration:none;
+    padding:14px 30px;
+    border-radius:999px;
+    box-shadow:0 4px 0 #D4507F;
+    transition:transform .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn:active{transform:translateY(1px); box-shadow:0 2px 0 #D4507F;}
+  .btn:focus-visible{outline:3px solid var(--sky-deep); outline-offset:3px;}
+
+  .whats-inside{
+    text-align:left;
+    max-width:420px;
+    margin:26px auto 0;
+    background:rgba(255,255,255,.6);
+    border-radius:var(--radius-md);
+    padding:18px 20px;
+  }
+  .whats-inside h3{
+    font-family:'Baloo 2', sans-serif;
+    font-size:16px;
+    margin:0 0 12px;
+  }
+  .whats-inside ul{list-style:none;margin:0;padding:0;columns:1;}
+  .whats-inside li{
+    position:relative;
+    padding-left:24px;
+    margin-bottom:8px;
+    font-size:14.5px;
+  }
+  .whats-inside li::before{
+    content:"✅";
+    position:absolute;left:0;top:0;
+    font-size:12.5px;
+  }
+
+  .divider{
+    text-align:center;
+    margin:0;
+    font-size:13px;
+    letter-spacing:2px;
+    color:#D9CFE4;
+    user-select:none;
+  }
+
+  footer{
+    text-align:center;
+    margin-top:34px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+
+  .mood-bunny{
+    float:right;
+    width:clamp(64px, 18vw, 96px);
+    height:auto;
+    max-width:28%;
+    object-fit:contain;
+    margin-top:-30px;
+    margin-right:0;
+    position:relative;
+    z-index:1;
+    pointer-events:none;
+  }
+
+
+  .cta{position:relative;}
+  .mood-bunny-new{
+    position:absolute;
+    object-fit:contain;
+    z-index:2;
+    pointer-events:none;
+  }
+
+  .reason.c-pink .mood-bunny-new{
+    float:right;
+    position:relative;
+    top:auto !important;
+    right:auto !important;
+    width:clamp(64px, 18vw, 96px) !important;
+    height:auto !important;
+    max-width:28%;
+    margin-top:-30px;
+    margin-right:0;
+    z-index:1;
+  }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO / card 1 -->
+  <!-- HERO / card 1 -->
+  <header class="hero">
+    <img src="assets/image-2.webp" alt="Почему УФ-смола остаётся липкой?" style="display:block; width:100%; height:auto; border-radius:var(--radius-lg);">
+  </header>
+
+  <p class="divider">· · ·</p>
+
+  <!-- REASON 2 -->
+  <section class="reason c-lavender">
+    <img class="mood-bunny" alt="" src="assets/image-3.webp">
+    <h2 style="margin-left: 0px;">Тёмный пигмент</h2>
+    <p class="lead">УФ‑лучи хуже проходят сквозь плотный тёмный цвет, поэтому на&nbsp;тёмных участках смола застывает дольше<br>или не&nbsp;застывает вообще</p>
+    <div class="note">💭 Тёмные цвета = больше времени на&nbsp;застывание</div>
+    <div class="callout tip">
+      <h3>💡 Что делать?</h3>
+      <ul>
+        <li>Перед нанесением UV‑смолы покройте изделие<br>акриловым лаком — он закрепит краску</li>
+        <li>После этого смола «схватится» за&nbsp;несколько минут</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- REASON 3 -->
+  <section class="reason c-butter">
+    <img class="mood-bunny" alt="" src="assets/image-4.webp">
+    
+    <h2>Избыток добавок<br>и&nbsp;неправильная толщина</h2>
+
+    <div class="callout tip">
+      <h3>🎨 Избыток добавок</h3>
+      <ul>
+        <li>Много пигментов, блёсток или красителей блокирует УФ‑лучи</li>
+        <li>Правило: добавок не&nbsp;больше 10% от&nbsp;объёма смолы</li>
+      </ul>
+    </div>
+
+    <div class="callout" style="background:rgba(255,255,255,.72); margin-top:18px;">
+      <h3 style="color:var(--butter-deep);">📏 Толщина слоя</h3>
+      <div class="grid2">
+        <div class="cell">
+          <h4>Тоньше 1 мм</h4>
+          <p>Недостаточно материала для&nbsp;полимеризации — смола остаётся липкой</p>
+        </div>
+        <div class="cell">
+          <h4>Толще 2–3 мм</h4>
+          <p>УФ‑лучи не&nbsp;достают до&nbsp;центра — внутри мягко, может образоваться «пузырь» жидкой смолы</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REASON 4 -->
+  <section class="reason c-mint">
+    <img class="mood-bunny" alt="" src="assets/image-5.webp">
+    <h2>Краска и&nbsp;лак не&nbsp;просохли</h2>
+    <p class="lead">Если вы покрасили изделие или покрыли лаком, обязательно дайте им хорошо высохнуть перед УФ‑смолой</p>
+
+    <div class="callout" style="background:rgba(255,255,255,.72);">
+      <h3 style="color:var(--mint-deep);">⏳ Время сушки</h3>
+      <div class="grid2">
+        <div class="cell">
+          <h4>Краска</h4>
+          <p>≈ 20–30 минут</p>
+        </div>
+        <div class="cell">
+          <h4>Лак</h4>
+          <p>≈ 30-50 минут между слоями</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <h3 style="color:#C98A2C;">⚠️ Что идёт не&nbsp;так?</h3>
+      <ul>
+        <li>Если слой плохо просох, УФ‑смола хуже «сцепляется»<br>и&nbsp;не&nbsp;застывает нормально</li>
+        <li>Время отверждения может растянуться<br>до 10 минут — это&nbsp;не&nbsp;норма</li>
+        <li>Норма: 1–2 минуты под&nbsp;лампой</li>
+      </ul>
+    </div>
+    <div class="note">🐾 Терпение = идеальный результат</div>
+  </section>
+
+  <!-- REASON 5 -->
+  <section class="reason c-sky">
+    <img class="mood-bunny" alt="" src="assets/image-6.webp">
+    <h2>Бракованная смола</h2>
+    <p class="lead">Бывает: покупаете ту же&nbsp;смолу, что и&nbsp;раньше, но&nbsp;теперь она не&nbsp;просыхает и&nbsp;остаётся липкой. Это&nbsp;может быть брак</p>
+
+    <div class="callout tip">
+      <h3 style="color:var(--sky-deep);">🛒 Что делать?</h3>
+      <ul>
+        <li>На&nbsp;маркетплейсах можно оформить возврат,<br>даже&nbsp;если упаковка вскрыта</li>
+      </ul>
+    </div>
+
+    <div class="callout" style="background:rgba(255,255,255,.72);">
+      <h3 style="color:var(--sky-deep);">🔍 Как&nbsp;проверить смолу на&nbsp;брак</h3>
+      <ol class="steps">
+        <li>Нанесите немного смолы на «голую» глину<br>и&nbsp;просушите под&nbsp;лампой</li>
+        <li>Если липкий слой не&nbsp;исчезает через 2–5 минут, дайте изделию «отдохнуть» 5–10 минут, затем снова под&nbsp;лампу</li>
+        <li>Если ничего не&nbsp;помогает — скорее всего, смола бракованная</li>
+      </ol>
+    </div>
+    <div class="note">📝 Проверь перед большой работой!</div>
+  </section>
+
+  <!-- REASON 6 -->
+  <section class="reason c-pink">
+    <img class="mood-bunny-new" alt="" src="assets/image-7.webp" 
+    style="top:275px; right:12px; width:110px; height:110px;">
+    
+    <h2>Если уже покрыли и&nbsp;всё липнет</h2>
+    <p class="lead">Выход есть, даже&nbsp;если изделие уже готово!</p>
+
+    <div class="callout tip">
+      <h3>✔️ Решение</h3>
+      <ul>
+        <li>Дайте смоле «отдохнуть»: уберите изделие из‑под&nbsp;лампы на 10 минут – за&nbsp;это&nbsp;время свободные молекулы смолы продолжают соединяться, и&nbsp;липкий слой часто исчезает сам</li>
+  <li>Если не&nbsp;помогло, нанесите тонкий слой акрилового лака поверх УФ‑смолы – лак «запечатает» липкий слой</li>
+      </ul>
+    </div>
+    <div class="note">💗 Второй шанс для&nbsp;твоих работ!</div>
+
+    <div class="prosbox">
+      <div class="cell minus"><strong>− Минус</strong>Глянец может немного приглушиться</div>
+      <div class="cell plus"><strong>+ Плюс</strong>Изделие перестанет липнуть и&nbsp;будет полностью готово к&nbsp;использованию</div>
+    </div>
+  </section>
+
+  <p class="divider">· · ·</p>
+
+  <!-- CTA / card 7 -->
+  <section class="cta">
+    <img class="mood-bunny-new" alt="" src="assets/image-8.webp" 
+    style="top:250px; right:12px; width:90px; height:90px;">
+    
+    <h2>Хочешь узнать больше?</h2>
+    <p>В&nbsp;Telegram‑боте «Глиняный гид» я собираю самые полезные инструкции, лайфхаки и&nbsp;разборы ошибок 🩷</p>
+
+    <div class="bot-card">
+      <div class="icon">
+        <img src="assets/image-9.webp" alt="Глиняный Гид">
+      </div>
+      <div>
+        <div class="name">Глиняный Гид</div>
+        <div class="desc">Полная база знаний по&nbsp;лепке из&nbsp;Air Dry глины</div>
+      </div>
+    </div>
+
+    <a class="btn" href="https://t.me/glina_i_polina_bot" target="_blank" rel="noopener">
+      Перейти в&nbsp;бота
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+
+    <div class="whats-inside">
+      <h3>🔍 Что внутри?</h3>
+      <ul>
+        <li>Как&nbsp;выбрать глину под&nbsp;задачу</li>
+        <li>Как&nbsp;сушить без&nbsp;трещин</li>
+        <li>Всё про покрытия: Уф-смола и&nbsp;Акриловый лак</li>
+        <li>Чем склеить детали надёжно</li>
+        <li>Короткие видео о&nbsp;техниках лепки</li>
+        <li>3 полноценных мастер‑класса</li>
+        <li>Ссылки на&nbsp;все материалы с&nbsp;артикулами</li>
+        <li>Моя протестированная база глин</li>
+        <li>И&nbsp;многое другое 💛</li>
+      </ul>
+    </div>
+
+    <p class="note final-note" style="margin-top:20px;">💗 Твори в&nbsp;своём темпе 💗</p>
+  </section>
+
+  <footer>	Полезные подсказки — в&nbsp;нужный момент ✨</footer>
+
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const shortWords = /(^|[\s(«])((?:в|во|и|а|но|на|с|со|к|ко|у|о|об|от|до|за|из|без|для|по|не|ни|же|ли)[\s\u00a0]+)/giu;
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    let node;
+
+    while (node = walker.nextNode()) {
+      if (!node.parentElement.closest('script, style')) textNodes.push(node);
+    }
+
+    textNodes.forEach(textNode => {
+      textNode.nodeValue = textNode.nodeValue.replace(
+        shortWords,
+        (_, prefix, word) => prefix + word.replace(/[\s\u00a0]+/g, '\u00a0')
+      );
+    });
+  });
+</script>
+</body>
+</html>
